@@ -1,0 +1,195 @@
+#include <stdio.h>
+#include<ctype.h>
+// function declaration
+void ReadMatrix(int a[10][10], int row, int col);
+void PrintMatrix(int a[10][10], int row, int col);
+void MatrixAddSub(int Arr1[10][10],int Arr2[10][10],int rows,int cols,int mul);
+void MatrixMultiply(int Arr1[10][10],int Arr2[10][10],int rows_1,int cols_1,int cols_2);
+int main(void) {
+    int i, j;
+    int matrixA[10][10], matrixB[10][10];
+    int rowA, colA, rowB, colB;
+    int operation;
+    int add=1;
+    int sub=-1;
+    char again = 'Y';  
+
+    while (again == 'Y'){ 
+    printf("            ******************               MATRIX CALCULATOR               *****************\n");
+    printf("            **********************************************************************************");
+    printf("\n");
+    
+
+    printf("Enter the number of rows of matrix1: ");
+    scanf("%d", &rowA);
+    printf("\n");
+    printf("Enter the number of columns of matrix1: ");
+    scanf("%d", &colA);
+    printf("\n");
+    printf("Enter the elements of matrix1 of %d x %d:\n", rowA, colA);
+    printf("\n");
+    ReadMatrix(matrixA, rowA, colA);
+    printf("\nMatrix A:\n");
+    PrintMatrix(matrixA, rowA, colA);
+
+    printf("\nEnter the number of rows of matrix2: ");
+    scanf("%d", &rowB);
+    printf("\n");
+    printf("Enter the number of columns of matrix2: ");
+    scanf("%d", &colB);
+    printf("\n");
+    printf("Enter the elements of matrix2 of %d x %d:\n", rowB, colB);
+    printf("\n");
+    ReadMatrix(matrixB, rowB, colB);
+    printf("\nMatrix B:\n");
+    PrintMatrix(matrixB, rowB, colB);
+
+     
+    printf("\nSelect the number of operation you want to perform with matrices:\n");
+    printf("1. Add\n");
+    printf("2. Subtract\n");
+    printf("3. Multiply\n");
+    printf("4. Divide\n");
+    printf("\n");
+    scanf("%d", &operation);
+    
+    
+    switch(operation)
+    {
+    	
+    	case 1:
+    		
+    		if((rowA!=rowB)&& (colA!=colB))
+    		{
+    			printf("Matrixes must be of same size to perform this operation");
+    			break;
+			}
+    		else
+    		{
+    			printf("The sum of both matrixes is: \n");
+    			MatrixAddSub(matrixA,matrixB,rowA,colA,add);
+    			break;
+			}
+			
+		case 2:
+			
+				if((rowA!=rowB)&& (colA!=colB))
+    		{
+    			printf("\nMatrixes must be of same size to perform this operation");
+    			break;
+			}
+    		else
+    		{
+    			printf("The difference of both matrixes is: \n");
+    			MatrixAddSub(matrixA,matrixB,rowA,colA,sub);
+    			break;
+			}
+			
+		case 3:
+		
+		       if(colA!=rowB)
+			   {
+			   	printf("\nError!!!! The Information is invalid to perform this operation,Kindly check your data again");
+			   	break;
+			   }
+			   
+			   else{
+			   	printf("\nThe multiplication of both matrixes is :\n");
+			   	MatrixMultiply(matrixA,matrixB,rowA,colA,colB);
+			   	
+			   	break;
+			   }	
+			   
+		case 4:
+		
+		       printf("Error!!! Two matrixes annot be divided,Kindly choose any other operation to perform\n\n\n\n");	   
+			   break;  
+			
+			
+	    default:
+		  printf("\nIncorrect option! Please choose a number 1-4.");  
+            break;  		
+	}
+
+      printf("\n\nDo you want to calculate again? Y/N\n");  
+        scanf(" %c", &again);  
+        again = toupper(again); 
+	}
+		return 0; 
+    }  
+    
+
+
+
+
+
+void ReadMatrix(int a[10][10], int row, int col) {
+    int i, j;
+
+    for (i = 0; i < row; i++) {
+        for (j = 0; j < col; j++) {
+            scanf("%d", &a[i][j]);
+        }
+    }
+}
+
+void PrintMatrix(int a[10][10], int row, int col) {
+    int i,j,k;
+
+    for (i = 0; i < row; i++) {
+        for (j = 0; j < col; j++) {
+            printf("%d ", a[i][j]);
+        }
+        printf("\n");
+    }
+}
+void MatrixAddSub(int Arr1[10][10],int Arr2[10][10],int rows,int cols,int mul){
+    int i,j;
+    int sumM[10][10];
+    int scaM[10][10];
+
+    for(i=0;i<rows;i++)
+    {
+        for(j=0;j<cols;j++)
+        {
+            scaM[i][j]= mul*Arr2[i][j];
+        }
+    }
+
+    for(i=0;i<rows;i++)
+    {
+        for(j=0;j<cols;j++)
+        {
+            sumM[i][j]= Arr1[i][j] + scaM[i][j];
+            printf("\t%d",sumM[i][j]);
+        }
+        printf("\n");
+    } 
+}
+  void MatrixMultiply(int Arr1[10][10], int Arr2[10][10],int rows_1, int cols_1, int cols_2){
+  
+  int mulM[10][10];
+  
+  for(int i = 0; i < rows_1; ++i){
+  	for(int j = 0; j < cols_2; ++j){
+  		mulM[i][j] = 0;
+	}
+  }
+  
+  for(int i = 0; i < rows_1; ++i){
+  	for(int j = 0; j < cols_2; ++j){
+  		for(int k = 0; k < cols_1; ++k){
+  			mulM[i][j] += Arr1[i][k] * Arr2[k][j];
+		  }
+	  }
+  }
+  
+  printf("\nOutput Matrix is: \n");
+  for(int i = 0; i < rows_1; ++i){
+  	for(int j = 0; j < cols_2; ++j){
+  		printf("\t%d", mulM[i][j]);
+  		if(j == cols_2 - 1)
+  			printf("\n\n");
+	}
+  }
+}
