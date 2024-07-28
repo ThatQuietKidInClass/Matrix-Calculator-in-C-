@@ -102,7 +102,7 @@ int main(void) {
 			   
 		case 4:
 		
-		       printf("Error!!! Two matrixes annot be divided,Kindly choose any other operation to perform\n\n\n\n");	   
+		       printf("Error!!! Two matrixes cannot be divided,Kindly choose any other operation to perform\n\n\n\n");	   
 			   break;  
 			
 			
